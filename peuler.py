@@ -31,7 +31,7 @@ res = p.solve()
 elapsed_time = time.time() - start_time
 
 # Display the results
-if (elapsed_time < 1) :
+if (elapsed_time < 60) :
     print "[ok] Result: {0} (obtained in {1}s)".format(res, elapsed_time)
 else:
     print "[ko] Result: {0} (obtained in {1}s)".format(res, elapsed_time)
