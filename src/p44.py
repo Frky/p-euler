@@ -16,17 +16,6 @@ class p44(Problem):
     """
 
 
-    def __compute_max_bound(self, k):
-        """
-            À partir d'un nombre k, calcule le premier entier n tel que 
-            l'écart entre P(n) et P(n+1) soit strictement plus grand que k.
-            Cela donne une borne supérieure sur i et j pour trouver des nombres 
-            pentagonaux tels que Pj - Pi < k
-
-        """
-        return (k - 1) / 3 + 1
-
-    
     def __is_pent(self, x):
         """
             Retourne true si x est un nombre pentagonal, false sinon
@@ -69,58 +58,37 @@ class p44(Problem):
         return n * (3*n - 1) / 2
 
 
-    def update(self, j, k, senti, sup):
-        """
-            Update the index of the loop. From the current values of j and k, 
-            look for the next couple j, k such that pj and pk are pentagonal
-            numbers of distance senti, with j < k <= sup
-            If there is not such couple, return (1, sup + 1). In this way,
-            we ensure that P(1) and P(sup + 1) are at distance at least senti + 1, 
-            which will lead to the next iteration on senti in the main loop.
-
-        """
-
-        k += 1
-        pj = self.p(j)
-        pk = self.p(k)
-        while (j < sup and (pk - pj) != senti):
-            if k < sup:
-                k += 1
-            else:
-                j += 1
-                k = j + 1
-            pj = self.p(j)
-            pk = self.p(k)
-    
-        if (j < sup):
-            return (j, k)
-        else:
-            return (1, sup + 1)
-
-
-    # l'intervalle entre P(n) et P(n+1) vaut 3n + 1 => intervalle strictement croissant
     def solve(self):
+        """
+            Idée: pour un k donné, on cherche un couple (i, j) tel que P(j) - P(i) = P(k)
+            Pour h = j - i donné, cela donne P(i + h) - P(i) = P(k), ce qui amène a i = ((P(k) - P(h)) / (3*h).
+            En effet:
+                P(i + h) - P(i) = P(k)
+            <=> (i + h) (3i + 3h - 1) - i (3i - 1) = 2P(k)
+            <=> 3ii + 3ih - i + 3ih + 3hh - h - 3ii - i = 2P(k)
+            <=> 6ih + 3hh - h = 2P(k)
+            <=> 6ih + h(3h - 1) = 2P(k)
+            <=> 6ih = 2P(k) - 2P(h)
+            <=> i = (P(k) - P(h)) / (3*h)
+
+            Une fois le couple i, j trouvé, il ne reste plus qu'à tester si P(i) + P(j) est pentagonal.
+
+        """
         
-        senti = 2
+        k = 1
         d = -1
         while d == -1:
-            if senti % 100 == 0:
-                print "[log] Testing with a distance of {0}".format(senti)
-            senti += 1
-            sup = self.__compute_max_bound(senti)
-            j, k = self.update(1, 1, senti, sup)
-            pj = self.p(j)
             pk = self.p(k)
-            while (pk - pj <= senti):
-                if  self.__is_pent(pk - pj) and self.__is_pent(pk + pj):
-                    d = pk - pj
-                    break
-                else:
-                    j, k = self.update(j, k, senti, sup)
-                    pj = self.p(j)
-                    pk = self.p(k)
-                        
-            
+            for h in xrange(1, k - 1):
+                ph = self.p(h)
+                i = (pk - ph) / (3*h)
+                j = i + h
+                pi = self.p(i)
+                pj = self.p(j)
+                if self.__is_pent(pi + pj) and self.__is_pent(pj - pi):
+                    d = pj - pi 
+            k += 1
+
         return d
 
 
