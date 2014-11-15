@@ -14,10 +14,10 @@ def eratosthene(n):
 
     """
     
-    sieve = range(2, n)
+    sieve = range(2, n + 1)
     for i in xrange(2, int(round(sqrt(n))) + 2):
         j = 2 * i
-        while (j < n):
+        while (j <= n):
             sieve[j - 2] = 0
             j += i
     return [p for p in sieve if p != 0]
@@ -68,18 +68,34 @@ def is_prime(n):
     return True # no base tested showed n as composite
 
 
-def pfactors(n):
+def next_prime(n):
+    """
+        Retourne le plus petit nombre premier strictement supérieur à n
+
+    """
+    
+    if (n % 2 == 0):
+        n += 1
+    else:
+        n += 2
+    while not is_prime(n):
+        n += 2
+    return n
+
+
+def pfactors(n, primes = None):
     """
         Retourne la liste des facteurs premiers de n
 
     """
     factors = list()
-    primes = eratosthene(n)
+    if primes is None:
+        primes = eratosthene(n)
     for p in primes:
         if n % p == 0:
             factors.append(p)
-    if map(lambda a, b: a*b, factors, 1) != n:
-        print ("Error computing prime factors of {0}.".format(n))
+#    if reduce(lambda a, b: a*b, factors, 1) != n:
+#        print ("Error computing prime factors of {0}.".format(n))
     return factors
 
 
