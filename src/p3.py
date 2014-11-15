@@ -2,7 +2,7 @@
 
 from p import Problem
 
-from toolbox import pfactors, largest_factor
+from toolbox import largest_factor
 
 
 class p3(Problem):
@@ -18,6 +18,4 @@ class p3(Problem):
     def solve(self):
         n = 600851475143
         return largest_factor(n)
-        fact = pfactors(n)
-        return max(fact)
 

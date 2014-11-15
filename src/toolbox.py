@@ -144,3 +144,22 @@ def is_hexa(x):
     """
     n = (sqrt(8*x + 1) + 1)/4.
     return n.is_integer()
+
+
+
+##### MISC #####
+
+def is_palind(n):
+    """
+        Retourne True si n est un nombre palindromique, 
+        False sinon. 
+
+    """
+
+    l = str(n)
+    i = 0
+    while (i < (len(l)/2 + 1)):
+        if (l[i] != l[len(l)-1-i]):
+            return False
+        i += 1
+    return True
