@@ -2,7 +2,8 @@
 
 from p import Problem
 
-from math import sqrt
+from toolbox import t, is_pent, is_hexa
+
 
 class p45(Problem):
 
@@ -18,39 +19,11 @@ class p45(Problem):
 
     """
 
-
-    def __is_pent(self, x):
-        """
-            Retourne true si x est un nombre pentagonal, false sinon
-
-        """
-        n = (sqrt(24*x + 1) + 1)/6.
-        return n.is_integer()
-
-
-    def __is_hexa(self, x):
-        """
-            Retourne true si x est un nombre hexagonal, false sinon
-
-        """
-        n = (sqrt(8*x + 1) + 1)/4.
-        return n.is_integer()
-
-
-    def t(self, n):
-        """
-            Retourne le nè nombre triangonal
-
-        """
-
-        return n * (n + 1) / 2
-
-
     def solve(self):
         n = 285
         while True:
             n += 1
-            tn = self.t(n)
-            if (self.__is_pent(tn) and self.__is_hexa(tn)):
+            tn = t(n)
+            if is_pent(tn) and is_hexa(tn):
                 return tn
 

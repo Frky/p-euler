@@ -2,7 +2,7 @@
 
 from p import Problem
 
-from math import sqrt
+from toolbox import p, is_pent
 
 class p44(Problem):
 
@@ -14,48 +14,6 @@ class p44(Problem):
         is minimised; what is the value of D?
 
     """
-
-
-    def __is_pent(self, x):
-        """
-            Retourne true si x est un nombre pentagonal, false sinon
-
-        """
-        n = (sqrt(24*x + 1) + 1)/6.
-        return n.is_integer()
-
-
-    def test_pent(self):
-        """
-            Fonction test pour tester l'implémentation de __is_pent
-
-        """
-
-        res_test = True
-
-        # Teste si la réponse est bien 'true' pour des nombres pentagonaux
-        for n in xrange(1, 50):
-            p = n * (3 * n - 1) / 2
-            if (not self.__is_pent(p)):
-                print "[err] {0} is the {1}-th pentagonal number (__is_pent returned false)".format(p, n)
-                res_test = False
-        # Teste si la réponse est bien 'false' pour des nombres non pentagonaux
-        for n in xrange(1, 50):
-            p = n * (3 * n - 1) / 2 + 1
-            if (self.__is_pent(p)):
-                print "[err] {0} is not a pentagonal number (__is_pent returned true)".format(p)
-                res_test = False
-
-        return res_test
-
-
-    def p(self, n):
-        """
-            Retourne le nè nombre pentagonal
-
-        """
-
-        return n * (3*n - 1) / 2
 
 
     def solve(self):
@@ -78,24 +36,16 @@ class p44(Problem):
         k = 1
         d = -1
         while d == -1:
-            pk = self.p(k)
+            pk = p(k)
             for h in xrange(1, k - 1):
-                ph = self.p(h)
+                ph = p(h)
                 i = (pk - ph) / (3*h)
                 j = i + h
-                pi = self.p(i)
-                pj = self.p(j)
-                if self.__is_pent(pi + pj) and self.__is_pent(pj - pi):
+                pi = p(i)
+                pj = p(j)
+                if is_pent(pi + pj) and is_pent(pj - pi):
                     d = pj - pi 
             k += 1
 
         return d
-
-
-if __name__ == "__main__":
-    p = p44(44)
-    if p.test_pent():
-        print "[ok] Tests successful."
-    else:
-        print "[ko] Some tests failed."
 
