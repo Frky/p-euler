@@ -1,7 +1,104 @@
 #-*- coding: utf-8 -*-
 
+import random
 from math import sqrt
 
+
+##### PRIME NUMBERS RELATIVE FUNCTIONS #####
+
+
+def eratosthene(n):
+    """
+        Retourne la liste des nombres premiers entre 1 et n
+        Utilise la méthode du crible d'Ératosthène
+
+    """
+    
+    sieve = range(2, n)
+    for i in xrange(2, int(round(sqrt(n))) + 2):
+        j = 2 * i
+        while (j < n):
+            sieve[j - 2] = 0
+            j += i
+    return [p for p in sieve if p != 0]
+
+
+def is_prime(n):
+    """
+        Test de primalité de Miller-Rabin
+        Code pris sur rosettacode.org
+
+    """
+
+    _mrpt_num_trials = 5
+
+    assert n >= 2
+    # special case 2
+    if n == 2:
+        return True
+    # ensure n is odd
+    if n % 2 == 0:
+        return False
+    # write n-1 as 2**s * d
+    # repeatedly try to divide n-1 by 2
+    s = 0
+    d = n-1
+    while True:
+        quotient, remainder = divmod(d, 2)
+        if remainder == 1:
+            break
+        s += 1
+        d = quotient
+    assert(2**s * d == n-1)
+ 
+    # test the base a to see whether it is a witness for the compositeness of n
+    def try_composite(a):
+        if pow(a, d, n) == 1:
+            return False
+        for i in range(s):
+            if pow(a, 2**i * d, n) == n-1:
+                return False
+        return True # n is definitely composite
+ 
+    for i in range(_mrpt_num_trials):
+        a = random.randrange(2, n)
+        if try_composite(a):
+            return False
+ 
+    return True # no base tested showed n as composite
+
+
+def pfactors(n):
+    """
+        Retourne la liste des facteurs premiers de n
+
+    """
+    factors = list()
+    primes = eratosthene(n)
+    for p in primes:
+        if n % p == 0:
+            factors.append(p)
+    if map(lambda a, b: a*b, factors, 1) != n:
+        print ("Error computing prime factors of {0}.".format(n))
+    return factors
+
+
+def largest_factor(n):
+    """
+        Retourne le plus grand facteur premier de n
+
+    """
+
+    if is_prime(n):
+        return n
+
+    j = int(round(sqrt(n))) + 1
+    while (n % j != 0) or not is_prime(j):
+        j -= 1
+    return j
+
+
+##### TRIANGULAR / PENTAGONAL / HEXAGONAL RELATIVE FUNCTIONS #####
 
 def t(n):
     """
