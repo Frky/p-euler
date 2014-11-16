@@ -83,6 +83,28 @@ def next_prime(n):
     return n
 
 
+def decompose(n, primes = None):
+    """
+        Retourne la décomposition en facteurs premiers de n, 
+        sous la forme d'une liste de tuples (facteur, puissance)
+
+    """
+    decomp = list()
+    if primes is None:
+        primes = eratosthene(n)
+    for p in primes:
+        power = 0
+        while n % p ** power == 0:
+            power += 1
+        power -= 1
+        if (power > 0):
+            decomp.append((p, power))
+    if reduce(lambda a, b: a*(b[0] ** b[1]), decomp, 1) != n:
+        print ("Error computing prime factors of {0}.".format(n))
+    return decomp
+
+
+
 def pfactors(n, primes = None):
     """
         Retourne la liste des facteurs premiers de n
