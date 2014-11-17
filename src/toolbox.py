@@ -201,3 +201,20 @@ def is_palind(n):
             return False
         i += 1
     return True
+
+
+def squareSum(n):
+    """ 
+        Retourne le carré de la somme des entiers allant de 1 à n 
+    
+    """
+    
+    return ((n*(n+1))/2)**2
+
+
+def sumSquare(n):
+    """ 
+        Retourne la somme des carrés des entiers allant de 1 à n 
+    """
+    
+    return sum([i**2 for i in xrange(1, n+1)])
