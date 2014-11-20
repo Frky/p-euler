@@ -2,8 +2,6 @@
 
 from p import Problem
 
-from toolbox import eratosthene
-
 class p8(Problem):
 
     """ 
