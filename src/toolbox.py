@@ -218,3 +218,7 @@ def sumSquare(n):
     """
     
     return sum([i**2 for i in xrange(1, n+1)])
+
+
+def is_pythagorean(a, b, c):
+    return a**2 + b**2 == c ** 2
