@@ -244,3 +244,19 @@ def is_permutation(m, n):
 
     return True
 
+
+def factorial(n):
+    if n <= 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+
+def combination(r, n):
+    """
+        Retourne C(r, n), c'est-à-dire le nombre de combinaisons possibles
+        de r éléments tirés parmi n.
+
+    """
+
+    return factorial(n) / (factorial(r) * factorial(n - r))
