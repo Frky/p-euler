@@ -221,4 +221,26 @@ def sumSquare(n):
 
 
 def is_pythagorean(a, b, c):
+    """
+        Retourne vrai ssi a^2 + b^2 == c^2
+
+    """
     return a**2 + b**2 == c ** 2
+
+
+def is_permutation(m, n):
+    """
+        Retourne true ssi n est une permutation de m, c'est-à-dire
+        ssi m et n sont composés exactement des mêmes chiffres.
+
+    """
+
+    if len(str(n)) != len(str(m)):
+        return False
+
+    for c in str(n):
+        if c not in str(m):
+            return False
+
+    return True
+
