@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 import random
-from math import sqrt
+from math import sqrt, ceil
 
 
 ##### PRIME NUMBERS RELATIVE FUNCTIONS #####
@@ -116,10 +116,23 @@ def pfactors(n, primes = None):
     for p in primes:
         if n % p == 0:
             factors.append(p)
-#    if reduce(lambda a, b: a*b, factors, 1) != n:
-#        print ("Error computing prime factors of {0}.".format(n))
     return factors
 
+
+def nb_factors(n):
+    """
+        Retourne le nombre de facteurs de n
+
+    """
+    nb_fact = 2
+    for i in xrange(2, int(ceil(sqrt(n)))):
+        if (n % i == 0):
+            if (i*i == n):
+                nb_fact += 1
+            else:
+                nb_fact += 2
+    
+    return nb_fact
 
 def largest_factor(n):
     """
