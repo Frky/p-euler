@@ -273,3 +273,42 @@ def combination(r, n):
     """
 
     return factorial(n) / (factorial(r) * factorial(n - r))
+
+
+
+### SYRACUSE ###
+def syracuse(n):
+    """
+        Retourne la séquence des termes de la suite de Syracuse de premier 
+        terme n jusqu'à 1
+
+    """
+    
+    if n <= 0:
+        return list()
+    syr = [n]
+    while n != 1:
+        if n % 2 == 0:
+            n = n / 2
+        else:
+            n = 3*n + 1
+        syr.append(n)
+    return syr
+
+
+def syracuseLength(n, data=None):
+    """
+        Retourne le nombre de termes de la suite de Syracuse de premier terme n
+
+    """
+    
+    if n <= 0:
+        return -1
+    elif data != None and len(data) > n and data[n] != -1:
+        return data[n]
+    elif n == 1:
+        return 1
+    elif n % 2 == 0:
+        return 1 + syracuseLength(n / 2, data)
+    else:
+        return 1 + syracuseLength(3*n + 1, data)
