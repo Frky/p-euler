@@ -312,3 +312,38 @@ def syracuseLength(n, data=None):
         return 1 + syracuseLength(n / 2, data)
     else:
         return 1 + syracuseLength(3*n + 1, data)
+
+
+### GRAPH ANT PATH RELATIVE FUNCTIONS ###
+
+class Node:
+
+    def __init__(self, val, left, right):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def max_path(tree, i):
+    """
+        À partir du noeud i ne l'arbre tree, calcule le chemin le plus long jusqu'à une feuille.
+
+    """
+    if (i >= len(tree)):
+        return 0
+    k = 0
+    l = 0
+    # recherche du début de la ligne suivante
+    while (i + k < len(tree) and tree[i + k] != "."):
+        k += 1
+    # recherche du début de la ligne courante
+    while ( i-l > 0 and tree[i - l - 1] != "."):
+        l += 1
+    if i + k == len(tree):
+        # on retourne la valeur de la feuille
+        return int(tree[i])
+    else:
+        #        print("{0} | k: {1} - l: {2}".format(tree[i],tree[i + k + 1 + l],tree[i + k + l + 2]))
+        # la ligne suivante commence à tree[i + k + 1]
+        # les fils de i sont donc à tree[i + k + 1 + l + 1] et tree[i + k + 1 + l + 2]
+        return int(tree[i]) + max(max_path(tree, i + k + l + 1), max_path(tree, i + k + l + 2))
