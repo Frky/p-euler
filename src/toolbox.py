@@ -347,3 +347,60 @@ def max_path(tree, i):
         # la ligne suivante commence à tree[i + k + 1]
         # les fils de i sont donc à tree[i + k + 1 + l + 1] et tree[i + k + 1 + l + 2]
         return int(tree[i]) + max(max_path(tree, i + k + l + 1), max_path(tree, i + k + l + 2))
+
+
+### CALENDAR RELATIVE FUNCTIONS ###
+
+monthLast = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+leapMonthLast = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+def is_leap(year):
+    """
+        Retourne vrai ssi l'année passée en paramètre est bissextile.
+
+    """
+    if (year % 4 == 0):
+        if (year % 100 == 0):
+            if (year % 400 == 0): 
+                return True
+            else:
+                return False
+        else:
+            return True
+    else:
+        return False
+
+def first_day(year):
+    """
+        Retourne le premier jour de l'année passée en paramètre sous forme d'un entier 
+        de 0 à 6 (0 correspond à un dimanche).
+
+    """
+    i = 1900
+    day = 1
+    while (i < year):
+        if is_leap(i):
+            day += 366
+        else:
+            day += 365
+        i += 1
+    return day % 7
+
+
+def is_sunday(year, month):
+    """
+        Retourne vrai ssi le premier jour du mois month de l'année year est un dimanche.
+
+    """
+    i = 0
+    days = 0
+    if is_leap(year):
+        while i < month:
+            days += leapMonthLast[i]
+            i += 1
+    else:
+        while i < month:
+            days += monthLast[i]
+            i += 1
+    return (first_day(year) + days) % 7 == 0
+
