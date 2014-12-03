@@ -119,6 +119,22 @@ def pfactors(n, primes = None):
     return factors
 
 
+def divisors(n):
+    """
+        Retourne l'ensemble des diviseurs de n (premiers ou non), n inclus
+
+    """
+    div = list()
+    div.append(1)
+    for i in xrange(2, int(ceil(sqrt(n)))):
+        if (n % i == 0):
+            div.append(i)
+            if (i*i != n):
+                div.append(n/i)
+    div.append(n)
+    return div 
+
+
 def nb_factors(n):
     """
         Retourne le nombre de facteurs de n
