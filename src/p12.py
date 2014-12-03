@@ -2,7 +2,7 @@
 
 from p import Problem
 
-from toolbox import nb_factors
+from toolbox import nb_divisors
 
 class p12(Problem):
 
@@ -34,12 +34,12 @@ class p12(Problem):
         trace = 5
         i = 2
         n = 1
-        nb_fact = nb_factors(n)
+        nb_fact = nb_divisors(n)
 
         while (nb_fact < 501):
             n += i
             i += 1
-            nb_fact = nb_factors(n)
+            nb_fact = nb_divisors(n)
             trace = nb_fact + 1
 
         return n

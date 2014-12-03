@@ -119,6 +119,21 @@ def pfactors(n, primes = None):
     return factors
 
 
+def largest_pfactor(n):
+    """
+        Retourne le plus grand facteur premier de n
+
+    """
+
+    if is_prime(n):
+        return n
+
+    j = int(round(sqrt(n))) + 1
+    while (n % j != 0) or not is_prime(j):
+        j -= 1
+    return j
+
+
 def divisors(n):
     """
         Retourne l'ensemble des diviseurs de n (premiers ou non), n inclus
@@ -135,7 +150,7 @@ def divisors(n):
     return div 
 
 
-def nb_factors(n):
+def nb_divisors(n):
     """
         Retourne le nombre de facteurs de n
 
@@ -149,20 +164,6 @@ def nb_factors(n):
                 nb_fact += 2
     
     return nb_fact
-
-def largest_factor(n):
-    """
-        Retourne le plus grand facteur premier de n
-
-    """
-
-    if is_prime(n):
-        return n
-
-    j = int(round(sqrt(n))) + 1
-    while (n % j != 0) or not is_prime(j):
-        j -= 1
-    return j
 
 
 ##### TRIANGULAR / PENTAGONAL / HEXAGONAL RELATIVE FUNCTIONS #####
