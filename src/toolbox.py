@@ -149,6 +149,12 @@ def divisors(n):
     div.append(n)
     return div 
 
+def proper_divisors(n):
+    """
+        Retourne l'ensemble des diviseurs de n (premiers ou non), n exclus
+
+    """
+    return divisors(n)[:-1]
 
 def nb_divisors(n):
     """
