@@ -223,6 +223,30 @@ def is_hexa(x):
 
 ##### MISC #####
 
+def fibonacci(n, prev_terms=None):
+    """
+        Retourne le nè terme de la suite de Fibonacci
+
+    """
+    a = 1
+    b = 1
+    nb_terms = 2
+    if prev_terms != None:
+        nb_terms = len(prev_terms)
+        if nb_terms > n-1:
+            return prev_terms[n-1]
+        else:
+            a = prev_terms[nb_terms - 2]
+            b = prev_terms[nb_terms - 1]
+    while nb_terms < n:
+        b = a + b
+        a = b - a 
+        if prev_terms != None:
+            prev_terms.append(b)
+        nb_terms += 1
+    return b
+
+
 def is_palind(n):
     """
         Retourne True si n est un nombre palindromique, 
