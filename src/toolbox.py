@@ -223,6 +223,14 @@ def is_hexa(x):
 
 ##### MISC #####
 
+def sum_of_digits(n):
+    """
+        Retourne la somme des chiffres composant n
+
+    """
+    return sum([int(c) for c in str(n)])
+
+
 def fibonacci(n, prev_terms=None):
     """
         Retourne le nè terme de la suite de Fibonacci
