@@ -322,6 +322,32 @@ def combination(r, n):
     return factorial(n) / (factorial(r) * factorial(n - r))
 
 
+def reverse(n):
+    """
+        Retourne l'entier n lu de droite à gauche.
+        Par exemple, pour n = 375, reverse(n) retourne 573.
+
+    """
+
+    return int("".join([str(n)[-i] for i in xrange(1, len(str(n)) + 1)]))
+
+
+def is_lychrel(n):
+    """
+        Retourne vrai ssi n est un nombre de Lychrel (pour n <= 10000)
+        Cette fonction prend pour hypothèse qu'un nombre est de Lychrel
+        s'il n'a toujours pas produit de nombre palindromique après 50 
+        itérations.
+
+    """
+
+    n += reverse(n)
+    for i in xrange(1, 51):
+        if is_palind(n):
+            return False
+        n += reverse(n)
+    return True
+
 
 ### SYRACUSE ###
 def syracuse(n):
