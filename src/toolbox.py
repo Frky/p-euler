@@ -2,7 +2,7 @@
 
 import random
 from math import sqrt, ceil
-
+from fractions import gcd
 
 ##### PRIME NUMBERS RELATIVE FUNCTIONS #####
 
@@ -495,37 +495,46 @@ def is_sunday(year, month):
             i += 1
     return (first_day(year) + days) % 7 == 0
 
+
 ### FRACTIONS ###
 
 class Fraction:
+    """
+        Classe de fractions rationnelles.
 
+    """
+    
     def __init__(self, num, den):
-
         self.num = num
         self.den = den
     
-    def read(self):
-
-        print( str(self.num )+'/'+str(self.den))
-        return
+    def __str__(self):
+        return "{0}/{1}".format(self.num, self.den)
 
     def invert(self):
-
         tmp = self.num
         self.num = self.den
         self.den = tmp
         return
 
+    def reduce(self):
+        self.num /= gcd(self.num, self.den)
+        self.den /= gcd(self.num, self.den)
+
+
 def int_to_frac(n):
     """
-        Convert an integer into a fraction
-    """
+        Conversion d'un entier n en une fraction rationnelle
 
+    """
     return Fraction(n, 1)
+
 
 def frac_sum(frac1, frac2):
     """
-        Return the exact sum of two fractions (without simplification)
+        Retourne la somme de deux fractions sans simplification
+
     """
     result = Fraction(frac1.num * frac2.den + frac2.num * frac1.den, frac1.den*frac2.den)
     return result
+
