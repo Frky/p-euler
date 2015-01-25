@@ -223,6 +223,16 @@ def is_hexa(x):
 
 ##### MISC #####
 
+def int_length(n):
+    """
+        Retourn la longueur du nombre n
+
+    """
+    if n>=0 :
+        return len(str(n)) 
+    else :
+        return len(str(n)) - 1
+
 def sum_of_digits(n):
     """
         Retourne la somme des chiffres composant n
@@ -484,4 +494,3 @@ def is_sunday(year, month):
             days += monthLast[i]
             i += 1
     return (first_day(year) + days) % 7 == 0
-
