@@ -5,7 +5,6 @@ from p import Problem
 class p59(Problem):
 
     """
-
         Each character on a computer is assigned a unique code and 
         the preferred standard is ASCII (American Standard Code for 
         Information Interchange). For example, uppercase A = 65,
@@ -53,8 +52,8 @@ class p59(Problem):
         l = len(key)
         tmp_output = list(cipher)
         output=""
-        for i in xrange(len(output)):
-            tmp_output[i]=chr(ord(output[i])^ord(key[i%l]))
+        for i in xrange(len(tmp_output)):
+            tmp_output[i]=chr(ord(tmp_output[i])^ord(key[i%l]))
         for c in tmp_output:
             output+=c
         return output
@@ -69,22 +68,23 @@ class p59(Problem):
         return count
 
     def solve(self):
-        cipher = self.cipher_parse("src/p59_cipher.txt")
+        cipher = self.cipher_parse("data/p59_cipher.txt")
         dico = ["the", "that", "this", "are", "is", "were", "was", "has", "have", "had", "out", "in", "off"]
         plaintext = ""
         potential_plaintext = ""
         occur = 0
         tmp_occur = 0
         key_result = ""
-        for c1 in xrange(128):
-            for c2 in xrange(128):
-                for c3 in xrange(128):
-                    key = str(c1)+str(c2)+str(c3)
+        for c1 in xrange(97,123):
+            for c2 in xrange(97,123):
+                for c3 in xrange(97,123):
+                    key = str(chr(c1))+str(chr(c2))+str(chr(c3))
                     potential_plaintext = self.decipher(cipher, key)
                     occur = self.occur(potential_plaintext, dico)
                     if tmp_occur < occur:
+                        tmp_occur = occur
                         plaintext = potential_plaintext
                         key_result = key
-        with open('src/p59_plaintext.txt', 'w') as f:
+        with open('data/p59_plaintext.txt', 'w') as f:
             f.write(plaintext)
-        return key
+        return key_result
