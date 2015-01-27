@@ -21,12 +21,6 @@ class p28(Problem):
         
     """
 
-    def generate_spiral(self, n):
-        spiral = list()
-        for i in range(0,n):
-            spiral.append(range(0,n))
-
-
     def solve(self):
         # 1 est sur la diagonale du carré de coté 1
         # génération d'un carré de coté 3 commençant par 2
