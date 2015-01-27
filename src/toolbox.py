@@ -32,7 +32,9 @@ def is_prime(n):
 
     _mrpt_num_trials = 5
 
-    assert n >= 2
+    assert n >= 1
+    if n == 1:
+        return False
     # special case 2
     if n == 2:
         return True
