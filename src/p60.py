@@ -2,21 +2,7 @@
 
 from p import Problem
 
-from toolbox import next_prime
-
-
-class Node(object):
-
-    def __init__(self, vals):
-        self.vals = vals
-        self.weight = sum(vals)
-        self.children = list()
-
-    def generate_children(self):
-        for i, v in enumerate(self.vals):
-            child_vals = list(self.vals)
-            child_vals[i] = next_prime(v)
-            self.children.append(Node(child_vals))
+from toolbox import is_prime, eratosthene
 
 class p60(Problem):
 
@@ -32,17 +18,52 @@ class p60(Problem):
 
     """
 
-    def explore(self, tree, max_sum):
-        print tree.vals
-        if tree.weight >= max_sum:
-            return
-        tree.generate_children()
-        for child in tree.children:
-            self.explore(child, max_sum)
+    def __init__(self, id):
+        self.NMAX = 10000
+        self.commute_with = list()
+        for x in xrange(self.NMAX):
+            self.commute_with.append(list())
+        return super(p60, self).__init__(id)
 
+    def commute(self, p, q):
+        if not is_prime(int(str(p) + str(q))):
+            return False
+        if not is_prime(int(str(q) + str(p))):
+            return False
+        return True
+
+    def find_commutation(self, n, curr):
+        if n == 0:
+            return curr
+        if len(curr) != 0 and len(self.commute_with[curr[-1]]) == 0:
+            return None
+        if len(curr) == 0:
+            mini = 3
+        else:
+            mini = curr[-1] + 1
+        if mini >= len(self.commute_with):
+            return None
+        for p, pcom in enumerate(self.commute_with[mini:]):
+            p += mini
+            possible = True
+            for c in curr:
+                if p not in self.commute_with[c]:
+                    possible = False
+                    break
+            if possible:
+                res = self.find_commutation(n - 1, curr + [p])
+                if res != None:
+                    return res
+        return None
 
     def solve(self):
-        tree = Node([2, 3])
-        self.explore(tree, 7 + 11)
-        return 0
+        primes = eratosthene(self.NMAX)
+        primes.remove(2)
+        primes.remove(5)
+        for i, p in enumerate(primes):
+            for q in primes[i:]:
+                if self.commute(p, q):
+                    self.commute_with[p].append(q)
+
+        return sum(self.find_commutation(5, list()))
 
