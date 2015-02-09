@@ -185,6 +185,26 @@ def t(n):
     return n * (n + 1) / 2
 
 
+def is_triang(x):
+    """
+        Retourne true ssi x est un nb triangulaire
+
+    """
+
+    n = (sqrt(8 * x + 1) - 1) / 2.
+    return n.is_integer()
+
+
+def is_square(x):
+    """
+        Retourne true ssi x est le carré d'un entier
+    
+    """
+    
+    n = sqrt(x)
+    return n.is_integer()
+
+
 def p(n):
     """
         Retourne le nè nombre pentagonal
@@ -222,6 +242,42 @@ def is_hexa(x):
     return n.is_integer()
 
 
+def hp(n):
+    """
+        Retourne le nè nombre heptagonal
+
+    """
+
+    return n * (5*n - 3) / 2
+
+
+def is_hepta(x):
+    """
+        Retourne true ssi x est hetpagonal
+
+    """
+    
+    n = (sqrt(40 * x + 9) + 3) / 10.
+    return n.is_integer()
+
+
+def o(n):
+    """
+        Retourne le nè nombre octagonal
+
+    """
+
+    return n * (3 * n - 2)
+
+
+def is_octa(x):
+    """
+        Retourne true ssi x est octagonal
+
+    """
+
+    n = (sqrt(3 * x + 1) + 1) / 3.
+    return n.is_integer()
 
 ##### MISC #####
 
