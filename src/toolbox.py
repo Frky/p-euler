@@ -195,6 +195,16 @@ def is_triang(x):
     return n.is_integer()
 
 
+def is_cube(x):
+    """
+        Retourne true ssi x est le carré d'un entier
+    
+    """
+    
+    n = x**(1/3.)
+    return round(n) ** 3 == x
+
+
 def is_square(x):
     """
         Retourne true ssi x est le carré d'un entier
