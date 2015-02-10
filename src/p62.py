@@ -2,8 +2,7 @@
 
 from p import Problem
 
-
-from toolbox import is_cube
+from toolbox import lowest_perm
 
 class p62(Problem):
 
@@ -18,53 +17,29 @@ class p62(Problem):
 
     """
 
-
     def __init__(self, id):
-        self.nmax = 1000
-        self.cube = [i ** 3 for i in xrange(self.nmax)]
+        self.nmax = 100000
+        self.seen = list()
+        for i in xrange(10000):
+            self.seen.append(dict())
         return super(p62, self).__init__(id)
 
 
-    def permutations(self, n):        
-        curr = list(str(n))
-        while True:
-            k0 = None
-            for i in range(len(curr)-1):
-                if curr[i] < curr[i+1]:
-                    k0=i
-            if k0 == None:
-                return
-    
-            l0 = k0+1
-            for i in range(k0+1, len(curr)):
-                if curr[k0] < curr[i]:
-                    l0 = i
-    
-            curr[k0], curr[l0] = curr[l0], curr[k0]
-            curr[k0+1:] = reversed(curr[k0+1:])
-            yield int("".join(curr))
-
-
-    def iscube(self, n):
-        for x in self.cube:
-            if x == n:
-                return True
-            if x > n:
-                return False
-        return False
-
-
     def solve(self):
-        N = 3
-        print self.cube
-        for res in xrange(100, self.nmax):
-            n = 1
-            for i in self.permutations(res**3):
-                if self.iscube(i): #is_cube(i):
-                    n += 1
-                if n > N:
-                    break
-            if n == N:
-                return res**3
+        N = 5
+        for n in xrange(300, self.nmax):
+            r = lowest_perm(n ** 3)
+            key = r / 10**7
+            rest = r % 10**7
+            while len(self.seen) < key + 1:
+                self.seen.append(dict())
+            if rest not in self.seen[key].keys():
+                self.seen[key][rest] = list()
+                self.seen[key][rest].append(n ** 3)
+            elif len(str(n ** 3)) == len(str(self.seen[key][rest][0])): 
+                self.seen[key][rest].append(n ** 3)
+            if len(self.seen[key][rest]) == N:
+                print self.seen[key][rest]
+                return self.seen[key][rest][0]
         return None
 
