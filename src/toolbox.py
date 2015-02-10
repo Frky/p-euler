@@ -374,6 +374,17 @@ def is_pythagorean(a, b, c):
     return a**2 + b**2 == c ** 2
 
 
+def lowest_perm(n):
+    """
+        Retourne la plus petite permutation de n (éventuellement
+        avec des zéros au début)
+
+    """
+    s = [int(x) for x in list(str(n))]
+    s = sorted(s)
+    return int("".join([str(x) for x in s]))
+
+
 def is_permutation(m, n):
     """
         Retourne true ssi n est une permutation de m, c'est-à-dire
