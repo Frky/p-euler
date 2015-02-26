@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 import random
-from math import sqrt, ceil
+from math import sqrt, floor, ceil
 from fractions import gcd
 
 ##### PRIME NUMBERS RELATIVE FUNCTIONS #####
@@ -616,4 +616,31 @@ def frac_sum(frac1, frac2):
     """
     result = Fraction(frac1.num * frac2.den + frac2.num * frac1.den, frac1.den*frac2.den)
     return result
+
+
+def quad_step(n, p, q):
+    """
+        Calcule une étape de la décomposition en fraction continue de
+        la racine carrée de n
+
+    """
+    a = floor((sqrt(n) + p) / q)
+    p -= q * a
+    return a, -p, (n - p*p)/q
+
+def continuous_fraction(n):
+    """
+        Calcule la décomposition en fraction continue de la racine carrée 
+        de n
+
+    """
+    p = 0
+    q = 1
+    a0, p, q = quad_step(n, p, q)
+    a0 = int(a0)
+    a = list()
+    while len(a) == 0 or floor(a[-1]) != 2*a0:
+        a1, p, q = quad_step(n, p, q)
+        a.append(int(a1))
+    return (a0, a)
 
