@@ -308,7 +308,6 @@ def sum_of_digits(n):
     """
     return sum([int(c) for c in str(n)])
 
-
 def fibonacci(n, prev_terms=None):
     """
         Retourne le nè terme de la suite de Fibonacci
@@ -583,39 +582,26 @@ class Fraction:
 
     """
     
-    def __init__(self, num, den):
+    def __init__(self, num, den=1):
         self.num = num
         self.den = den
     
     def __str__(self):
         return "{0}/{1}".format(self.num, self.den)
 
-    def invert(self):
-        tmp = self.num
-        self.num = self.den
-        self.den = tmp
-        return
+
+    def __add__(self, other):
+        res = Fraction(self.num * other.den + other.num * self.den, other.den*self.den)
+        res.reduce()
+        return res
+        
+
+    def __invert__(self):
+        return Fraction(self.den, self.num)
 
     def reduce(self):
         self.num /= gcd(self.num, self.den)
         self.den /= gcd(self.num, self.den)
-
-
-def int_to_frac(n):
-    """
-        Conversion d'un entier n en une fraction rationnelle
-
-    """
-    return Fraction(n, 1)
-
-
-def frac_sum(frac1, frac2):
-    """
-        Retourne la somme de deux fractions sans simplification
-
-    """
-    result = Fraction(frac1.num * frac2.den + frac2.num * frac1.den, frac1.den*frac2.den)
-    return result
 
 
 def quad_step(n, p, q):
