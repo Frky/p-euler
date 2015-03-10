@@ -2,7 +2,7 @@
 
 from p import Problem
 
-from toolbox import Fraction
+from toolbox import Fraction, seq_to_frac
 
 class p65(Problem):
 
@@ -44,14 +44,6 @@ class p65(Problem):
     """
 
     
-    def simplify(self, seq, val):
-        res = val
-        while len(seq) != 0:
-            val = seq.pop(-1)
-            res = val + ~res
-        return res
-
-
     def gen_seq(self, n):
         if n == 0:
             return
@@ -75,7 +67,7 @@ class p65(Problem):
     def solve(self):
         vals = list()
         for i in self.gen_seq(100):
-            vals.append(Fraction(i))
-        res = self.simplify(vals[:-1], vals[-1]).num
+            vals.append(i)
+        res = seq_to_frac(vals).num
         return sum([int(c) for c in str(res)])
 
