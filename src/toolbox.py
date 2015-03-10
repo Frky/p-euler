@@ -630,3 +630,14 @@ def continuous_fraction(n):
         a.append(int(a1))
     return (a0, a)
 
+def seq_to_frac(seq):
+    """
+        A partir d'un développement en fraction continue, 
+        calcule la fraction réduite correspondante
+
+    """
+    res = Fraction(seq.pop(-1))
+    while len(seq) > 0:
+        val = Fraction(seq.pop(-1))
+        res = val + ~res
+    return res 
