@@ -492,30 +492,61 @@ class Node:
         self.left = left
         self.right = right
 
+class Tree:
 
-def max_path(tree, i):
-    """
-        À partir du noeud i ne l'arbre tree, calcule le chemin le plus long jusqu'à une feuille.
+    def __init__(self, filename):
+        self.data = []
+        self.n = -1
+        self.parse(filename)
+        self.max_sum = [-1] * len(self.data)
 
-    """
-    if (i >= len(tree)):
-        return 0
-    k = 0
-    l = 0
-    # recherche du début de la ligne suivante
-    while (i + k < len(tree) and tree[i + k] != "."):
-        k += 1
-    # recherche du début de la ligne courante
-    while ( i-l > 0 and tree[i - l - 1] != "."):
-        l += 1
-    if i + k == len(tree):
-        # on retourne la valeur de la feuille
-        return int(tree[i])
-    else:
-        #        print("{0} | k: {1} - l: {2}".format(tree[i],tree[i + k + 1 + l],tree[i + k + l + 2]))
-        # la ligne suivante commence à tree[i + k + 1]
-        # les fils de i sont donc à tree[i + k + 1 + l + 1] et tree[i + k + 1 + l + 2]
-        return int(tree[i]) + max(max_path(tree, i + k + l + 1), max_path(tree, i + k + l + 2))
+    def parse(self, filename):
+        with open(filename, "r") as f:
+            for line in f.readlines():
+                self.data += [int(x) for x in line[:-1].split(" ")]
+                self.n += 1
+
+    def node(self, i, j):
+        if (j > i):
+            return None
+        return self.data[i * (i + 1) / 2 + j]
+
+    def depth(self):
+        return self.n
+
+    def set_sum(self, i, j, s):
+        self.max_sum[i * (i + 1) / 2 + j] = s
+
+    def sum_path(self, i, j):
+        return self.max_sum[i * (i + 1) / 2 + j]
+
+    def compute_path(self, i, j):
+        if i == self.depth():
+            self.set_sum(i, j, self.node(i, j))
+        else:
+            self.set_sum(i, j, 
+                            self.node(i, j) + max(self.sum_path(i + 1, j), 
+                                                    self.sum_path(i + 1, j + 1)
+                                                )
+                            )
+
+    def __str__(self):
+        s = ""
+        for i in xrange(self.depth() + 1):
+            for j in xrange(i + 1):
+                s += str(self.node(i, j)) + " "
+            s += "\n"
+        return s
+
+
+    def max_path(self):
+        k = self.depth()
+        while (k != 0):
+            for j in xrange(0, k + 1):
+                self.compute_path(k, j)
+            k = k - 1
+        self.compute_path(0, 0)
+        return self.sum_path(0, 0)
 
 
 ### CALENDAR RELATIVE FUNCTIONS ###
