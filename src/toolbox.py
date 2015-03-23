@@ -106,7 +106,6 @@ def decompose(n, primes = None):
     return decomp
 
 
-
 def pfactors(n, primes = None):
     """
         Retourne la liste des facteurs premiers de n
@@ -133,6 +132,21 @@ def largest_pfactor(n):
     j = int(round(sqrt(n))) + 1
     while (n % j != 0) or not is_prime(j):
         j -= 1
+    return j
+
+
+def smallest_pfactor(n):
+    """
+        Retourne le plus petit facteur premier de n
+
+    """
+
+    if is_prime(n):
+        return n
+
+    j = 2
+    while (n % j != 0) or not is_prime(j):
+        j += 1
     return j
 
 
@@ -172,6 +186,23 @@ def nb_divisors(n):
                 nb_fact += 2
     
     return nb_fact
+
+
+def phi(n, table):
+    """
+        Retourne le nombre de nombres inférieurs à n premiers avec n
+        /!\ table doit contenir l'ensemble des valeurs de phi(i)
+        pour tout 1 < i < n
+
+    """
+    if n == 1:
+        return 1
+    elif is_prime(n):
+        return n - 1
+    else:
+        m = smallest_pfactor(n)
+        d = gcd(m, n/m)
+        return table[n/m] * table[m] * d / table[d]
 
 
 ##### TRIANGULAR / PENTAGONAL / HEXAGONAL RELATIVE FUNCTIONS #####
