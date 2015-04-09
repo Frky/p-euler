@@ -141,12 +141,11 @@ def smallest_pfactor(n):
 
     """
 
-    if is_prime(n):
-        return n
-
-    j = 2
+    if n % 2 == 0:
+        return 2
+    j = 3
     while (n % j != 0) or not is_prime(j):
-        j += 1
+        j += 2
     return j
 
 
@@ -165,12 +164,14 @@ def divisors(n):
     div.append(n)
     return div 
 
+
 def proper_divisors(n):
     """
         Retourne l'ensemble des diviseurs de n (premiers ou non), n exclus
 
     """
     return divisors(n)[:-1]
+
 
 def nb_divisors(n):
     """
@@ -201,8 +202,10 @@ def phi(n, table):
         return n - 1
     else:
         m = smallest_pfactor(n)
-        d = gcd(m, n/m)
-        return table[n/m] * table[m] * d / table[d]
+        if n/m % m == 0:
+            return table[n/m] * m
+        else:
+            return table[n/m] * table[m]
 
 
 ##### TRIANGULAR / PENTAGONAL / HEXAGONAL RELATIVE FUNCTIONS #####
@@ -426,7 +429,7 @@ def is_permutation(m, n):
         return False
 
     for c in str(n):
-        if c not in str(m):
+        if c not in str(m) or str(n).count(c) != str(m).count(c):
             return False
 
     return True
